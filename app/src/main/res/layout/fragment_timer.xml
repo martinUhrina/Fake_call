@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".TimerFragment">
+
+        <Button
+            android:id="@+id/btnTimerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="Volat"
+            android:textSize="25dp"
+            style="@style/btnStyle"
+            app:strokeColor="@color/white"
+            app:strokeWidth="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></Button>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@drawable/ic_pozadiefakecall" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/idChipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="22dp"
+            android:scrollbarSize="4sp"
+            app:singleSelection="true"
+            app:layout_constraintBottom_toTopOf="@+id/btnTimerFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/idteraz"
+                android:layout_width="wrap_content"
+                style="@style/CustomChipStyle"
+                android:layout_height="wrap_content"
+                android:text="teraz" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/id10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/CustomChipStyle"
+                android:text="10s"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/id20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/CustomChipStyle"
+                android:text="20s"
+                />
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/idCountDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/biela"
+            android:textSize="32sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnTimerFragment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
