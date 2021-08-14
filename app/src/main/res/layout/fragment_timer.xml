@@ -14,18 +14,18 @@
 
         <Button
             android:id="@+id/btnTimerFragment"
+            style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
             android:text="Volat"
             android:textSize="25dp"
-            style="@style/btnStyle"
-            app:strokeColor="@color/white"
-            app:strokeWidth="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></Button>
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:strokeColor="@color/white"
+            app:strokeWidth="4dp"></Button>
 
         <ImageView
             android:id="@+id/imageView"
@@ -40,34 +40,32 @@
             android:layout_height="wrap_content"
             android:layout_margin="22dp"
             android:scrollbarSize="4sp"
-            app:singleSelection="true"
             app:layout_constraintBottom_toTopOf="@+id/btnTimerFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/idteraz"
-                android:layout_width="wrap_content"
                 style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="teraz" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/id10"
+                style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CustomChipStyle"
-                android:text="10s"
-                />
+                android:text="10s" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/id20"
+                style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/CustomChipStyle"
-                android:text="20s"
-                />
+                android:text="20s" />
         </com.google.android.material.chip.ChipGroup>
 
         <TextView
@@ -82,6 +80,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnTimerFragment" />
+
+        <RadioGroup
+            android:id="@+id/idFunction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/btnTimerFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idChipGroup">
+
+            <RadioButton
+                android:id="@+id/idCalling"
+                style="@style/styleradiobutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volat" />
+
+            <RadioButton
+                android:id="@+id/idIncomingCall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prichadzajuci hovor"
+                style="@style/styleradiobutton" />
+        </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

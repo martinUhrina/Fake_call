@@ -3,21 +3,18 @@ package com.example.fake_call
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.DatabaseUtils
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.fake_call.databinding.FragmentTimerBinding
-import kotlin.concurrent.timer
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +58,7 @@ class TimerFragment : Fragment() {
 
         binding.btnTimerFragment.setOnClickListener {
             //timer
+            val function = binding.idFunction.checkedRadioButtonId
             var timerID = binding.idChipGroup.checkedChipId
             var timer: Long = 1
             when(timerID){
@@ -72,15 +70,27 @@ class TimerFragment : Fragment() {
             startTimer(longTimer = timer,binding,telNumber)
             //star call
 
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                {
                     ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), REQUEST_PHONE_CALL)
-                } else {
-           /*         startCall()
+                }
+                else {
+             /*       if(function == binding.idCalling.id) {
+
+                    startCall(telNumber)
+                    }
+                    else{
+                        startIncomingCall()
+                    }
                     goBack()
-             */   }
+              */}
 
         }
         return binding.root
+    }
+
+    private fun startIncomingCall() {
+
     }
 
     private fun startTimer(longTimer: Long, binding:FragmentTimerBinding, number:String) {
@@ -93,10 +103,18 @@ class TimerFragment : Fragment() {
                 binding.idCountDown.text = (millisUntilFinished/1000).toString()
             }
 
+            val function = binding.idFunction.checkedRadioButtonId
             override fun onFinish() {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), REQUEST_PHONE_CALL)
-                startCall(number)
-                goBack()
+                if (function == binding.idCalling.id) {
+                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), REQUEST_PHONE_CALL)
+                    startCall(number)
+                    goBack()
+                }
+                else
+                {
+                    startIncomingCall()
+                    goBack()
+                }
             }
         }
         cTimer.start()
@@ -121,6 +139,7 @@ class TimerFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     //    if(requestCode == REQUEST_PHONE_CALL) startCall()
     }
+
 
 
 

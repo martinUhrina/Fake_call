@@ -15,4 +15,10 @@
         <item name="chipBackgroundColor">@color/chip_background_color</item>
 
     </style>
+
+    <style name="styleradiobutton">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/biela</item>
+        <item name="android:textSize">22sp</item>
+    </style>
 </resources>
