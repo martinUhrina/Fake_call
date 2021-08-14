@@ -6,10 +6,12 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.telecom.PhoneAccountHandle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -93,6 +95,8 @@ class TimerFragment : Fragment() {
 
     }
 
+
+
     private fun startTimer(longTimer: Long, binding:FragmentTimerBinding, number:String) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             binding.idCountDown.setTransitionVisibility(View.VISIBLE)
@@ -150,8 +154,9 @@ class TimerFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-/*   companion object {
-        /**
+   companion object {
+
+       /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
@@ -168,5 +173,5 @@ class TimerFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }*/
+    }
 }
