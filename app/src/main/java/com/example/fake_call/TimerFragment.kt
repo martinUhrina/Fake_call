@@ -1,22 +1,27 @@
 package com.example.fake_call
 
+
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.text.CaseMap
 import android.net.Uri
-import android.os.Bundle
-import android.os.CountDownTimer
-import android.telecom.PhoneAccountHandle
+import android.os.*
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.fake_call.databinding.FragmentTimerBinding
+import kotlinx.coroutines.delay
 
+
+private val Any.placeCall: Unit
+    get() {}
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,13 +46,16 @@ class TimerFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-
+     
     }
+
+
 
     val REQUEST_PHONE_CALL = 1
     var POMOC = false
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         val binding: FragmentTimerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_timer, container, false)
 
 
@@ -69,10 +77,11 @@ class TimerFragment : Fragment() {
                 binding.id20.id -> timer = 20000
             }
 
-            startTimer(longTimer = timer,binding,telNumber)
+            startTimer(longTimer = timer, binding, telNumber)
             //star call
 
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.MANAGE_OWN_CALLS),REQUEST_PHONE_CALL)
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
                 {
                     ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), REQUEST_PHONE_CALL)
                 }
@@ -91,13 +100,89 @@ class TimerFragment : Fragment() {
         return binding.root
     }
 
-    private fun startIncomingCall() {
+  /*  @SuppressLint("NewApi")
+    fun startIncomingCall() {
+
+        @RequiresApi(Build.VERSION_CODES.M)
+        class MyConnectionService : ConnectionService(){
+        }                                                                   //!!!!!!!!!!!!!!!!!!!!!!!!
+
+        var phoneAcount : PhoneAccountHandle = (PhoneAccountHandle(ComponentName.unflattenFromString("jani")!!,"11"))
+        var zvazok : Bundle = requireArguments()
+
+        var variable : TelecomManager =
+        variable.addNewIncomingCall(phoneAcount,zvazok)
 
     }
+*/
+    private fun startIncomingCall(telNumber:String) {
+
+
+      var thiscontext = this.context
+
+      if (thiscontext != null) {
+          FakeRing(telNumber, thiscontext)
+      }
 
 
 
-    private fun startTimer(longTimer: Long, binding:FragmentTimerBinding, number:String) {
+
+ //       val customView = RemoteViews(android.widget.FrameLayout.AUTOFILL_HINT_PHONE, R.layout.fragment_timer)
+     //   var notificationIntent = Intent(this, CallingActivity::class.java)
+  //      var hungupIntent = Intent(this, HungUpBroadcast::class.java)
+    //    var answerIntent = Intent(this,AnwerCallActivity::class.java)
+
+        //startActivity(notificationIntent as Intent?)
+
+  //      val pendingIntent = PendingIntent.getActivity(requireContext(),0, notificationIntent as Intent?,
+    //    PendingIntent.FLAG_UPDATE_CURRENT)
+     //   val hungupPendingIntent = PendingIntent.getBroadcast(requireContext(),0,
+       //         hungupIntent as Intent?,PendingIntent.FLAG_UPDATE_CURRENT)
+    //    val answerPendingIntent = PendingIntent.getActivity(requireContext(),0,
+      //          answerIntent as Intent?,PendingIntent.FLAG_UPDATE_CURRENT)
+
+//        customView.setOnClickPendingIntent(R.id.btnAnwer,answerPendingIntent)
+  //      customView.setOnClickPendingIntent(R.id.btnDeclime,hungupPendingIntent)
+
+//        notificationIntent.setData(Uri.parse("tel: 456464848"))
+    //    startActivity(notificationIntent)
+
+       /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        }
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse("tel: $number")
+            startActivity(callIntent)*/
+    }
+/*
+    @JvmName("Intent2")
+    private fun Intent(timerFragment: TimerFragment, java: Class<AnwerCallActivity>): Any {
+        return Intent()
+    }
+
+    @JvmName("Intent1")
+    private fun Intent(timerFragment: TimerFragment, java: Class<HungUpBroadcast>): Any
+    {
+        return Intent()
+    }
+
+    private fun Intent(timerFragment: TimerFragment, java: Class<CallingActivity>): Any
+    {
+        return Intent()
+    }
+
+*/
+fun FakeRing(fakeNumber: String, context : Context) {
+
+    val FakeRing = Intent(context, FakeCallRinging::class.java)
+    FakeRing.putExtra("fakeNumber", fakeNumber)
+    startActivity(FakeRing)
+}
+
+
+    private fun startTimer(longTimer: Long, binding: FragmentTimerBinding, number: String) {                                  //spustenie casovaca
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             binding.idCountDown.setTransitionVisibility(View.VISIBLE)
         }
@@ -116,7 +201,7 @@ class TimerFragment : Fragment() {
                 }
                 else
                 {
-                    startIncomingCall()
+                    startIncomingCall(number)
                     goBack()
                 }
             }
@@ -124,20 +209,21 @@ class TimerFragment : Fragment() {
         cTimer.start()
     }
 
-    private fun goBack() {
+    private fun goBack() {                                                                                                  //po hovore ist na uvodnu obrazovku
         findNavController(requireParentFragment()).navigate(R.id.action_timerFragment_to_welcomeFragment)
     }
 
 
-    private fun startCall(number:String) {
+    private fun startCall(number: String) {
         val callIntent = Intent(Intent.ACTION_CALL)
         callIntent.data = Uri.parse("tel: $number")
         startActivity(callIntent)
     }
+
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -154,6 +240,8 @@ class TimerFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+
+
    companion object {
 
        /**
@@ -173,5 +261,7 @@ class TimerFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+
     }
+
 }
