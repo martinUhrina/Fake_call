@@ -1,13 +1,14 @@
 package com.example.fake_call
 
+import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.fake_call.databinding.FragmentWelcomeBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,17 +33,32 @@ class WelcomeFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding:FragmentWelcomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false)
+        setHasOptionsMenu(true)
         binding.btnNext.setOnClickListener {view:View ->
-            view.findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToTimerFragment(binding.EditTextName.text.toString(),binding.editTextNumber.text.toString()))
+            if(binding.EditTextName.text.toString() == "" || binding.editTextNumber.text.toString() == "") {
+                Toast.makeText(context, "Prosim, zadajte vsetky parametre", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                view.findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToTimerFragment(binding.EditTextName.text.toString(), binding.editTextNumber.text.toString()))
+            }
         }
 
        return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_welcome,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = this.findNavController()
+        return NavigationUI.onNavDestinationSelected(item,navController)
     }
 
     companion object {

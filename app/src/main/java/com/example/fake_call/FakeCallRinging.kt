@@ -16,6 +16,7 @@ class FakeCallRinging : AppCompatActivity() {
     private var ringTone: MediaPlayer? = null
     var titleBar: TextView? = null
     var fakeNumber: TextView? = null
+    var fakeName: TextView? = null
     var answerCall: Button? = null
     var rejectCall: Button? = null
     protected override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +38,7 @@ class FakeCallRinging : AppCompatActivity() {
 
     private fun InitialiseControl() {
         fakeNumber = findViewById(R.id.chosenfakenumber)
+        fakeName = findViewById(R.id.chosenfakename)
         answerCall = findViewById(R.id.answercall)
         rejectCall = findViewById(R.id.rejectcall)
     }
@@ -51,6 +53,8 @@ class FakeCallRinging : AppCompatActivity() {
     private fun AssignFakeNumberAndDisplay() {
         val number = contactNumber
         fakeNumber!!.text = number
+        val name = contactName
+        fakeName!!.text = name
     }
 
     private fun GetNetworkOperatorName() {
@@ -58,7 +62,7 @@ class FakeCallRinging : AppCompatActivity() {
         networkCarrier = tm.networkOperatorName
         titleBar = findViewById(R.id.textView1)
         if (networkCarrier != null) {
-            titleBar!!.text = "Incoming call - $networkCarrier"
+            titleBar!!.text = "$networkCarrier"
         } else {
             titleBar!!.text = "Incoming call"
         }
@@ -74,4 +78,14 @@ class FakeCallRinging : AppCompatActivity() {
             }
             return contact
         }
+    private val contactName:String?
+    private get() {
+        var contact:String? = null
+        val myIntent: Intent = getIntent()
+        val mIntent = myIntent.extras
+        if(mIntent != null){
+            contact = mIntent.getString("fakeName")
+        }
+        return contact
+    }
 }

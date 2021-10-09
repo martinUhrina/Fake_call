@@ -2,22 +2,21 @@ package com.example.fake_call
 
 
 import android.Manifest
+import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.icu.text.CaseMap
 import android.net.Uri
 import android.os.*
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.fake_call.databinding.FragmentTimerBinding
-import kotlinx.coroutines.delay
 
 
 private val Any.placeCall: Unit
@@ -44,19 +43,30 @@ class TimerFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+
+
         }
 
-     
     }
 
 
 
     val REQUEST_PHONE_CALL = 1
     var POMOC = false
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        val binding: FragmentTimerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_timer, container, false)
+
+
+
+        val binding: FragmentTimerBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_timer,
+            container,
+            false
+        )
 
 
         var name:String
@@ -77,13 +87,21 @@ class TimerFragment : Fragment() {
                 binding.id20.id -> timer = 20000
             }
 
-            startTimer(longTimer = timer, binding, telNumber)
+            startTimer(longTimer = timer, binding, telNumber, name)
             //star call
 
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.MANAGE_OWN_CALLS),REQUEST_PHONE_CALL)
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.MANAGE_OWN_CALLS),
+                REQUEST_PHONE_CALL
+            )
             if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
                 {
-                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), REQUEST_PHONE_CALL)
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(Manifest.permission.CALL_PHONE),
+                        REQUEST_PHONE_CALL
+                    )
                 }
                 else {
              /*       if(function == binding.idCalling.id) {
@@ -115,13 +133,13 @@ class TimerFragment : Fragment() {
 
     }
 */
-    private fun startIncomingCall(telNumber:String) {
+    private fun startIncomingCall(telNumber: String, name: String) {
 
 
       var thiscontext = this.context
 
       if (thiscontext != null) {
-          FakeRing(telNumber, thiscontext)
+          FakeRing(telNumber, thiscontext, name)
       }
 
 
@@ -174,15 +192,21 @@ class TimerFragment : Fragment() {
     }
 
 */
-fun FakeRing(fakeNumber: String, context : Context) {
+fun FakeRing(fakeNumber: String, context: Context, name: String) {
 
     val FakeRing = Intent(context, FakeCallRinging::class.java)
     FakeRing.putExtra("fakeNumber", fakeNumber)
+    FakeRing.putExtra("fakeName", name)
     startActivity(FakeRing)
 }
 
 
-    private fun startTimer(longTimer: Long, binding: FragmentTimerBinding, number: String) {                                  //spustenie casovaca
+    private fun startTimer(
+        longTimer: Long,
+        binding: FragmentTimerBinding,
+        number: String,
+        name: String
+    ) {                                  //spustenie casovaca
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             binding.idCountDown.setTransitionVisibility(View.VISIBLE)
         }
@@ -195,13 +219,17 @@ fun FakeRing(fakeNumber: String, context : Context) {
             val function = binding.idFunction.checkedRadioButtonId
             override fun onFinish() {
                 if (function == binding.idCalling.id) {
-                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), REQUEST_PHONE_CALL)
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(Manifest.permission.CALL_PHONE),
+                        REQUEST_PHONE_CALL
+                    )
                     startCall(number)
                     goBack()
                 }
                 else
                 {
-                    startIncomingCall(number)
+                    startIncomingCall(number, name)
                     goBack()
                 }
             }
@@ -221,9 +249,9 @@ fun FakeRing(fakeNumber: String, context : Context) {
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

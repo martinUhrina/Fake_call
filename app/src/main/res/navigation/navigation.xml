@@ -28,4 +28,9 @@
             android:name="number"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/about_aplication2"
+        android:name="com.example.fake_call.about_aplication"
+        android:label="fragment_about_aplication"
+        tools:layout="@layout/fragment_about_aplication" />
 </navigation>
