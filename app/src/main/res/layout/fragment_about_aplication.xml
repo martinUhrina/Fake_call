@@ -6,22 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".about_aplication">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/ic_pozadiefakecall2_1" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="50dp"
         android:layout_marginRight="10dp"
         android:fontFamily="@font/amarante"
-        android:text="Thank for downloading FAKE_CALL application."
+        android:text="@string/thanks_abobut_fragment"
         android:textColor="@color/black"
-        android:textSize="32dp" />
+        android:textSize="35sp" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        android:layout_width="277dp"
+        android:layout_height="318dp"
+        android:contentDescription="ide o obrazok"
+android:layout_marginLeft="75dp"
+        android:layout_marginTop="175dp"
+        android:src="@android:drawable/ic_menu_myplaces" />
+
 
 </FrameLayout>

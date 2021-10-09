@@ -49,9 +49,12 @@
             android:ems="10"
             android:hint="number"
             android:inputType="number"
+            android:shadowColor="@color/black"
             android:textAlignment="center"
             android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
             android:textColorHint="@color/black"
+            android:textColorLink="@color/black"
             android:textSize="25dp" />
 
         <ImageView

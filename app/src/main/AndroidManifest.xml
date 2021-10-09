@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FAKE_CALL">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                   android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +32,8 @@
             </intent-filter>
             
         </activity>
-        <activity android:name=".FakeCallRinging"></activity>
+        <activity android:name=".FakeCallRinging"
+                  android:screenOrientation="locked"></activity>
         <service android:name=".CallService"/>
         <meta-data
             android:name="preloaded_fonts"

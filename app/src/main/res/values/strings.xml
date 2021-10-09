@@ -2,4 +2,5 @@
     <string name="app_name">FAKE_CALL</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="thanks_abobut_fragment">Thank for download FAKE_CALL application.</string>
 </resources>
