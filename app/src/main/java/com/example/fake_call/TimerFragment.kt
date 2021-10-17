@@ -233,7 +233,7 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
                 }
                 else
                 {
-                    addToDatabase()
+                    addToDatabase(name,number)
                     startIncomingCall(number, name)
                     goBack()
                 }
@@ -242,8 +242,8 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
         cTimer.start()
     }
 
-    private  fun addToDatabase() {
-        var data = CallData(1,"jano","0123456")
+    private  fun addToDatabase(name:String,number: String) {
+        var data = CallData(1,name,number)
         val dao = context?.let { CallDatabase.getDatabase(it.applicationContext).dao() }
         GlobalScope.launch {
             dao?.insertData(data)
