@@ -16,7 +16,11 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.example.fake_call.dao.DAO
+import com.example.fake_call.database.CallDatabase
 import com.example.fake_call.databinding.FragmentTimerBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 private val Any.placeCall: Unit
@@ -229,6 +233,7 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
                 }
                 else
                 {
+                    addToDatabase()
                     startIncomingCall(number, name)
                     goBack()
                 }
@@ -236,6 +241,15 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
         }
         cTimer.start()
     }
+
+    private  fun addToDatabase() {
+        var data = CallData(1,"jano","0123456")
+        val dao = context?.let { CallDatabase.getDatabase(it.applicationContext).dao() }
+        GlobalScope.launch {
+            dao?.insertData(data)
+        }
+    }
+
 
     private fun goBack() {                                                                                                  //po hovore ist na uvodnu obrazovku
         findNavController(requireParentFragment()).navigate(R.id.action_timerFragment_to_welcomeFragment)

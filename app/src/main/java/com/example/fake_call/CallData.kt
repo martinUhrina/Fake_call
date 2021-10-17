@@ -5,12 +5,11 @@ import androidx.room.PrimaryKey
 import java.sql.Time
 
 
-@Entity(tableName = "callDataHistory")
+@Entity()
 data class CallData(
-    @PrimaryKey val id:Int,
-    val meno:String,
-    val cislo:String,
-    val cas:Time
+    @PrimaryKey(autoGenerate = true) var id:Int,
+    var meno:String,
+    var cislo:String
 )
 {
 
