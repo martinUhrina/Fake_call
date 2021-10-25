@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fake_call.database.CallDatabase
+import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -29,24 +32,33 @@ class history : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
+        callList?.layoutManager = LinearLayoutManager(context)
+        /*val dao = context?.let { CallDatabase.getDatabase(it).dao() }
+        callList.adapter = dao?.let { CallAdapter(it.selectAllData()) }*/
+        getFromDatabase()
+
+
+
+
+    }
+
+    private fun getFromDatabase() {
+        GlobalScope.launch {
+            val dao = context?.let { CallDatabase.getDatabase(it).dao() }
+            callList?.adapter = dao?.let { CallAdapter(it.selectAllData()) }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+
         return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment history.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
                 history().apply {

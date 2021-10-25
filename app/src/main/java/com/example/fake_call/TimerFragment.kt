@@ -2,7 +2,6 @@ package com.example.fake_call
 
 
 import android.Manifest
-import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,16 +10,16 @@ import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
+import androidx.annotation.NonNull
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
-import com.example.fake_call.dao.DAO
 import com.example.fake_call.database.CallDatabase
 import com.example.fake_call.databinding.FragmentTimerBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 
 
 private val Any.placeCall: Unit
@@ -36,7 +35,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [TimerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-@Suppress("DEPRECATION")
+
 class TimerFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -233,6 +232,7 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
                 }
                 else
                 {
+                   // kurnik()
                     addToDatabase(name,number)
                     startIncomingCall(number, name)
                     goBack()
@@ -242,8 +242,19 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
         cTimer.start()
     }
 
+    /*private fun kurnik()
+    {
+        var data = CallData(3,"Fero","98467135")
+        val dao = context?.let { CallDatabase.getDatabase(it.applicationContext).dao() }
+        GlobalScope.launch {
+            dao?.insertData(data)
+        }
+
+    }*/
+
     private  fun addToDatabase(name:String,number: String) {
-        var data = CallData(1,name,number)
+        var data = CallData(meno = name, cislo = number)
+
         val dao = context?.let { CallDatabase.getDatabase(it.applicationContext).dao() }
         GlobalScope.launch {
             dao?.insertData(data)

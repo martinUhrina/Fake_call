@@ -8,9 +8,9 @@ import com.example.fake_call.CallData
 interface DAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertData(call_data:CallData)
+     fun insertData(call_data:CallData)
 
     @Query("SELECT * FROM CallData")
-    suspend fun selectAllData():List<CallData>
+    fun selectAllData():List<CallData>
 
 }
