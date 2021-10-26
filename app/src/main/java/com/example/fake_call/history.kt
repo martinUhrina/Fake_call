@@ -35,7 +35,7 @@ class history : Fragment() {
 
 
         callList?.layoutManager = LinearLayoutManager(context)
-        /*val dao = context?.let { CallDatabase.getDatabase(it).dao() }
+     /*   val dao = context?.let { CallDatabase.getDatabase(it).dao() }
         callList.adapter = dao?.let { CallAdapter(it.selectAllData()) }*/
         getFromDatabase()
 
@@ -53,6 +53,8 @@ class history : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        /*callList?.layoutManager = LinearLayoutManager(context)
+        getFromDatabase()*/
 
 
         return inflater.inflate(R.layout.fragment_history, container, false)

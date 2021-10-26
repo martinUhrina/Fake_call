@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#C3C1C1"
     android:paddingBottom="15dp">
 
     <ImageView
@@ -21,18 +21,18 @@
         android:id="@+id/callName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="30dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/imageViewInRecycle"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/callNumber"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/imageViewInRecycle"
         app:layout_constraintTop_toBottomOf="@+id/callName" />
