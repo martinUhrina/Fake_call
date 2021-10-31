@@ -10,7 +10,6 @@ import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,7 +18,6 @@ import com.example.fake_call.database.CallDatabase
 import com.example.fake_call.databinding.FragmentTimerBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.NullPointerException
 
 
 private val Any.placeCall: Unit

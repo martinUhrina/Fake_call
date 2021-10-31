@@ -42,7 +42,7 @@ class WelcomeFragment : Fragment() {
         setHasOptionsMenu(true)
         binding.btnNext.setOnClickListener {view:View ->
             if(binding.EditTextName.text.toString() == "" || binding.editTextNumber.text.toString() == "") {
-                Toast.makeText(context, "Prosim, zadajte vsetky parametre", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please, insert all data", Toast.LENGTH_SHORT).show()
             }
             else
             {

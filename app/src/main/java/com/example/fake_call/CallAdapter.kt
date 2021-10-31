@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CallAdapter(val callList:List<CallData>) : RecyclerView.Adapter<CallViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CallViewHolder {
        var view =  LayoutInflater.from(parent.context).inflate(R.layout.call_row_recycle_view, parent,false)
+
 
         return CallViewHolder(view)
     }

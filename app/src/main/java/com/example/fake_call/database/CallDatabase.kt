@@ -17,7 +17,7 @@ abstract class CallDatabase:RoomDatabase() {
     companion object{
         private var DATABASE: CallDatabase? = null
 
-        fun getDatabase(context:Context): CallDatabase{
+        fun getDatabase(context: Context): CallDatabase{
             return DATABASE ?: synchronized(this){
                 val database = Room.databaseBuilder(
                         context.applicationContext,
