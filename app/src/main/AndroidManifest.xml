@@ -25,7 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FAKE_CALL">
         <activity
-            android:name=".ShowHistory">
+            android:name=".ShowHistory"
+            android:screenOrientation="locked"
+            android:parentActivityName=".MainActivity">
 
 
         </activity>

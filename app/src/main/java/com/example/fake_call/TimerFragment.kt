@@ -10,6 +10,7 @@ import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.example.fake_call.database.CallDatabase
 import com.example.fake_call.databinding.FragmentTimerBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 
 private val Any.placeCall: Unit
@@ -240,22 +242,20 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
         cTimer.start()
     }
 
-    /*private fun kurnik()
-    {
-        var data = CallData(3,"Fero","98467135")
-        val dao = context?.let { CallDatabase.getDatabase(it.applicationContext).dao() }
-        GlobalScope.launch {
-            dao?.insertData(data)
+
+    private  fun addToDatabase(name:String, number: String) {
+
+        val currentDateLocal = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {          //nastavenie aktualneho datumu
+            LocalDate.now()
+        } else {
+            "1.1.2001"
         }
 
-    }*/
-
-    private  fun addToDatabase(name:String,number: String) {
-        var data = CallData(meno = name, cislo = number)
-
-        val dao = context?.let { CallDatabase.getDatabase(it.applicationContext).dao() }
+        var data = CallData(meno = name, cislo = number, currentDate = currentDateLocal.toString())                 //poslanie dat do enetity
+   //     val dao = CallDatabase.getDatabase(this.requireContext()).dao()
+        val dao = context?.let { CallDatabase.getDatabase(it.applicationContext).dao() }                            //vytvorenie vedlajsieho vlakna
         GlobalScope.launch {
-            dao?.insertData(data)
+            dao?.insertData(data)                                                                                    //poslanie cez DAO do databasy
         }
     }
 

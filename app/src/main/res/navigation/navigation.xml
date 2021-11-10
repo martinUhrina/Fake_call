@@ -33,9 +33,4 @@
         android:name="com.example.fake_call.about_aplication"
         android:label="fragment_about_aplication"
         tools:layout="@layout/fragment_about_aplication" />
-    <fragment
-        android:id="@+id/history2"
-        android:name="com.example.fake_call.history"
-        android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
 </navigation>

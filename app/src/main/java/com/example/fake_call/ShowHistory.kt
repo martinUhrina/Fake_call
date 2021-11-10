@@ -1,5 +1,6 @@
 package com.example.fake_call
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,9 +14,9 @@ class ShowHistory : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_history)
 
+        val dao = CallDatabase.getDatabase(application).dao()
         CallListActivity.layoutManager = LinearLayoutManager(this)
         GlobalScope.launch {
-            val dao = CallDatabase.getDatabase(application).dao()
             CallListActivity.adapter = CallAdapter(dao.selectAllData())
         }
     }

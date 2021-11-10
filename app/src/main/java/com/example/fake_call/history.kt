@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fake_call.database.CallDatabase
+import kotlinx.android.synthetic.main.activity_show_history.*
 import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,9 +32,12 @@ class history : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        val StartHistory = Intent(context, ShowHistory::class.java)
 
-        startActivity(StartHistory)
+
+
+       // val StartHistory = Intent(context, ShowHistory::class.java)
+
+        //startActivity(StartHistory)
 
 
     }

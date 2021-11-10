@@ -13,4 +13,8 @@ interface DAO {
     @Query("SELECT * FROM CallData")
     fun selectAllData():List<CallData>
 
+    @Delete
+    fun deleteOneCall(callData : CallData)
+
+
 }

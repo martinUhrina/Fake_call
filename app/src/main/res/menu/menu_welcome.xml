@@ -4,6 +4,6 @@
     <item android:title="About Aplication"
         android:id="@+id/about_aplication2"/>
     <item android:title="History"
-        android:id="@+id/history2"
+        android:id="@+id/history_fragment"
         ></item>
 </menu>

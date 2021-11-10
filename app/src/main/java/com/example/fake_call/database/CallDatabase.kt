@@ -9,7 +9,7 @@ import com.example.fake_call.dao.DAO
 
 @Database(
         entities = arrayOf(CallData::class),
-        version = 1
+        version = 2
 )
 abstract class CallDatabase:RoomDatabase() {
     abstract fun dao():DAO

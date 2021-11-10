@@ -1,17 +1,11 @@
 package com.example.fake_call
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.databinding.DataBindingUtil
+import android.view.MenuItem
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.example.fake_call.databinding.ActivityMainBinding
-import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +22,20 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.navHostFragment)
         return navController.navigateUp()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var id : Int = item.itemId
+        if(id == R.id.history_fragment)
+        {
+            val StartHistory = Intent(this
+                , ShowHistory::class.java)
+
+            startActivity(StartHistory)
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
 

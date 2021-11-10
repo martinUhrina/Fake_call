@@ -2,15 +2,18 @@ package com.example.fake_call
 
 import android.content.Context
 import android.icu.text.CaseMap
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.fake_call.databinding.FragmentWelcomeBinding
+import java.time.LocalDateTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,15 +37,21 @@ class WelcomeFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val binding:FragmentWelcomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false)
         setHasOptionsMenu(true)
         binding.btnNext.setOnClickListener {view:View ->
-            if(binding.EditTextName.text.toString() == "" || binding.editTextNumber.text.toString() == "") {
+            if(binding.EditTextName.text.toString() == "" || binding.editTextNumber.text.toString() == "" ) {
                 Toast.makeText(context, "Please, insert all data", Toast.LENGTH_SHORT).show()
+            }
+            else if (binding.editTextNumber.length() > 10)
+            {
+                Toast.makeText(context, "Your number is invalid", Toast.LENGTH_SHORT).show()
             }
             else
             {
