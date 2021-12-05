@@ -33,4 +33,9 @@
         android:name="com.example.fake_call.about_aplication"
         android:label="fragment_about_aplication"
         tools:layout="@layout/fragment_about_aplication" />
+    <activity
+        android:id="@+id/showHistory"
+        android:name="com.example.fake_call.ShowHistory"
+        android:label="activity_show_history"
+        tools:layout="@layout/activity_show_history" />
 </navigation>

@@ -5,8 +5,8 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.Bundle
 import android.telephony.TelephonyManager
-import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -17,11 +17,13 @@ class FakeCallRinging : AppCompatActivity() {
     var titleBar: TextView? = null
     var fakeNumber: TextView? = null
     var fakeName: TextView? = null
-    var answerCall: Button? = null
-    var rejectCall: Button? = null
+    var answerCall: ImageButton? = null
+    var rejectCall: ImageButton? = null
     protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fakeringlayout)
+        val actionBar = supportActionBar
+        actionBar!!.title = ""
         InitialiseControl()
         GetNetworkOperatorName()
         AssignFakeNumberAndDisplay()

@@ -16,5 +16,10 @@ interface DAO {
     @Delete
     fun deleteOneCall(callData : CallData)
 
+    @Query("DELETE FROM CallData")
+    fun deleteAllCall()
+
+
+
 
 }

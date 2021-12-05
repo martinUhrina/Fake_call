@@ -1,19 +1,18 @@
 package com.example.fake_call
 
-import android.content.Context
-import android.icu.text.CaseMap
+
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.fake_call.databinding.FragmentWelcomeBinding
-import java.time.LocalDateTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +34,8 @@ class WelcomeFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+
+
         }
     }
     @RequiresApi(Build.VERSION_CODES.O)
@@ -43,11 +44,20 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding:FragmentWelcomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false)
+        val binding:FragmentWelcomeBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_welcome,
+            container,
+            false
+        )
         setHasOptionsMenu(true)
-        binding.btnNext.setOnClickListener {view:View ->
+        binding.btnNext.setOnClickListener { view: View ->
             if(binding.EditTextName.text.toString() == "" || binding.editTextNumber.text.toString() == "" ) {
                 Toast.makeText(context, "Please, insert all data", Toast.LENGTH_SHORT).show()
+            }
+            else if (binding.EditTextName.length() >20)
+            {
+                Toast.makeText(context, "Your name is long", Toast.LENGTH_SHORT).show()
             }
             else if (binding.editTextNumber.length() > 10)
             {
@@ -55,7 +65,12 @@ class WelcomeFragment : Fragment() {
             }
             else
             {
-                view.findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToTimerFragment(binding.EditTextName.text.toString(), binding.editTextNumber.text.toString()))
+                view.findNavController().navigate(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToTimerFragment(
+                        binding.EditTextName.text.toString(),
+                        binding.editTextNumber.text.toString()
+                    )
+                )
             }
         }
 
@@ -63,12 +78,18 @@ class WelcomeFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_welcome,menu)
+        inflater.inflate(R.menu.menu_welcome, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = this.findNavController()
-        return NavigationUI.onNavDestinationSelected(item,navController)
+        return NavigationUI.onNavDestinationSelected(item, navController)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as? AppCompatActivity)?.supportActionBar?.title = "Fake Call"
+
     }
 
     companion object {

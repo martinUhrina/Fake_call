@@ -7,13 +7,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
+import android.util.Log
+import android.util.Log.INFO
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.fake_call.database.CallDatabase
 import com.example.fake_call.databinding.FragmentTimerBinding
@@ -40,35 +43,36 @@ class TimerFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var counterRemainingTime = MutableLiveData<Long>()
+    var unitToEnd = MutableLiveData<Long>()
+    var nameLive = MutableLiveData<String>()
+    var numberLive = MutableLiveData<String>()
+    var isOnStop = MutableLiveData<Boolean>()
+    var countQuantity = MutableLiveData<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-
-
+            counterRemainingTime.value = 0
+            unitToEnd.value =10
+            isOnStop.value = true
+            countQuantity.value = 0
         }
-
     }
-
-
 
     val REQUEST_PHONE_CALL = 1
     var POMOC = false
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-
-
-
+        Log.i("TimerFragment","sme v onCreteView")
         val binding: FragmentTimerBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_timer,
-            container,
-            false
+                inflater,R.layout.fragment_timer,container,false
         )
 
 
@@ -78,20 +82,35 @@ class TimerFragment : Fragment() {
             name = TimerFragmentArgs.fromBundle(it!!).name
             telNumber = TimerFragmentArgs.fromBundle(it!!).number
         }
+        nameLive.value = name
+        numberLive.value = telNumber
 
         binding.btnTimerFragment.setOnClickListener {
             //timer
-            val function = binding.idFunction.checkedRadioButtonId
-            var timerID = binding.idChipGroup.checkedChipId
-            var timer: Long = 1
-            when(timerID){
-                binding.idteraz.id -> timer = 0
-                binding.id10.id -> timer = 10000
-                binding.id20.id -> timer = 20000
+            if (!POMOC)
+            {
+                counterRemainingTime.value = 0
+                val function = binding.idFunction.checkedRadioButtonId
+                var timerID = binding.idChipGroup.checkedChipId
+                var timer: Long = 10
+                when(timerID){
+                    binding.idteraz.id -> timer = 10
+                    binding.id10.id -> timer = 10000
+                    binding.id20.id -> timer = 20000
+                }
+                when(timerID)
+                {
+                    binding.idteraz.id -> counterRemainingTime.value = 10
+                    binding.id10.id -> counterRemainingTime.value = 10000
+                    binding.id20.id -> counterRemainingTime.value = 20000
+                }
+
+                POMOC = true
+            //    startTimer(longTimer = timer, binding, telNumber, name)
+                startTimer(longTimer = counterRemainingTime.value!!, binding, telNumber, name)
             }
 
-            startTimer(longTimer = timer, binding, telNumber, name)
-            //star call
+                //star call
 
             ActivityCompat.requestPermissions(
                 requireActivity(),
@@ -121,80 +140,16 @@ class TimerFragment : Fragment() {
         return binding.root
     }
 
-  /*  @SuppressLint("NewApi")
-    fun startIncomingCall() {
 
-        @RequiresApi(Build.VERSION_CODES.M)
-        class MyConnectionService : ConnectionService(){
-        }                                                                   //!!!!!!!!!!!!!!!!!!!!!!!!
-
-        var phoneAcount : PhoneAccountHandle = (PhoneAccountHandle(ComponentName.unflattenFromString("jani")!!,"11"))
-        var zvazok : Bundle = requireArguments()
-
-        var variable : TelecomManager =
-        variable.addNewIncomingCall(phoneAcount,zvazok)
-
-    }
-*/
     private fun startIncomingCall(telNumber: String, name: String) {
-
 
       var thiscontext = this.context
 
       if (thiscontext != null) {
           FakeRing(telNumber, thiscontext, name)
       }
-
-
-
-
- //       val customView = RemoteViews(android.widget.FrameLayout.AUTOFILL_HINT_PHONE, R.layout.fragment_timer)
-     //   var notificationIntent = Intent(this, CallingActivity::class.java)
-  //      var hungupIntent = Intent(this, HungUpBroadcast::class.java)
-    //    var answerIntent = Intent(this,AnwerCallActivity::class.java)
-
-        //startActivity(notificationIntent as Intent?)
-
-  //      val pendingIntent = PendingIntent.getActivity(requireContext(),0, notificationIntent as Intent?,
-    //    PendingIntent.FLAG_UPDATE_CURRENT)
-     //   val hungupPendingIntent = PendingIntent.getBroadcast(requireContext(),0,
-       //         hungupIntent as Intent?,PendingIntent.FLAG_UPDATE_CURRENT)
-    //    val answerPendingIntent = PendingIntent.getActivity(requireContext(),0,
-      //          answerIntent as Intent?,PendingIntent.FLAG_UPDATE_CURRENT)
-
-//        customView.setOnClickPendingIntent(R.id.btnAnwer,answerPendingIntent)
-  //      customView.setOnClickPendingIntent(R.id.btnDeclime,hungupPendingIntent)
-
-//        notificationIntent.setData(Uri.parse("tel: 456464848"))
-    //    startActivity(notificationIntent)
-
-       /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        }
-            val callIntent = Intent(Intent.ACTION_CALL)
-            callIntent.data = Uri.parse("tel: $number")
-            startActivity(callIntent)*/
-    }
-/*
-    @JvmName("Intent2")
-    private fun Intent(timerFragment: TimerFragment, java: Class<AnwerCallActivity>): Any {
-        return Intent()
     }
 
-    @JvmName("Intent1")
-    private fun Intent(timerFragment: TimerFragment, java: Class<HungUpBroadcast>): Any
-    {
-        return Intent()
-    }
-
-    private fun Intent(timerFragment: TimerFragment, java: Class<CallingActivity>): Any
-    {
-        return Intent()
-    }
-
-*/
 fun FakeRing(fakeNumber: String, context: Context, name: String) {
 
     val FakeRing = Intent(context, FakeCallRinging::class.java)
@@ -204,12 +159,15 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
 }
 
 
-    private fun startTimer(
+    private fun startTimer(                                                                         //zaciatok casovaca
         longTimer: Long,
         binding: FragmentTimerBinding,
         number: String,
         name: String
-    ) {                                  //spustenie casovaca
+    ) {
+
+
+        //spustenie casovaca
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             binding.idCountDown.setTransitionVisibility(View.VISIBLE)
         }
@@ -217,25 +175,47 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
         var cTimer = object  : CountDownTimer(longTimer, 1000){
             override fun onTick(millisUntilFinished: Long) {
                 binding.idCountDown.text = (millisUntilFinished/1000).toString()
+                unitToEnd.value = millisUntilFinished
             }
 
             val function = binding.idFunction.checkedRadioButtonId
             override fun onFinish() {
-                if (function == binding.idCalling.id) {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(Manifest.permission.CALL_PHONE),
-                        REQUEST_PHONE_CALL
-                    )
-                    startCall(number)
-                    goBack()
+                if (isOnStop.value == true && countQuantity.value == 0) {
+
+                    if (function == binding.idCalling.id) {
+                        ActivityCompat.requestPermissions(
+                                requireActivity(),
+                                arrayOf(Manifest.permission.CALL_PHONE),
+                                REQUEST_PHONE_CALL
+                        )
+                        addToDatabase(name, number)
+                        startCall(number)
+                        goBack()
+                    } else {
+                        Log.i("TimerFragment", "pustam hovor cez Klasiku " + isOnStop.value)
+                        countQuantity.value = 1
+                        addToDatabase(name, number)
+                        startIncomingCall(number, name)
+                        goBack()
+                    }
                 }
-                else
-                {
-                   // kurnik()
-                    addToDatabase(name,number)
-                    startIncomingCall(number, name)
-                    goBack()
+            }
+        }
+        cTimer.start()
+    }
+
+
+    private fun startTimerOnStop()
+    {
+        var cTimer = object  : CountDownTimer(unitToEnd.value!!.toLong(), 1000)
+        {
+            override fun onTick(millisUntilFinished: Long) {
+            }
+            override fun onFinish() {
+                if (isOnStop.value == false && countQuantity.value == 0) {
+                    Log.i("TimerFragment", "pustam hovor cez onStop " + isOnStop.value)
+                    countQuantity.value = 1
+                    startIncomingCall(numberLive.value.toString(), nameLive.value.toString())
                 }
             }
         }
@@ -278,11 +258,58 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    //    if(requestCode == REQUEST_PHONE_CALL) startCall()
+
+    }
+
+
+    override fun onStop() {
+   //     Log.i("TimerFragment", "sme v onStop" + unitToEnd.value)
+        isOnStop.value = false
+ //       startTimerOnStop()
+        super.onStop()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("TimerFragment", "sme v onStart")
+        (activity as? AppCompatActivity)?.supportActionBar?.title = "Make Call"
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.i("TimerFragment", "sme v onAttach")
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.i("TimerFragment", "sme v onActivityCreated")
+    }
+
+    override fun onResume() {
+        Log.i("TimerFragment", "sme v onResume")
+        if(isOnStop.value == false) {
+            Log.i("TimerFragment", "pustam casovac cez onResume")
+            startTimerOnStop()
+        }
+         super.onResume()
+    }
+
+    override fun onPause() {
+        Log.i("TimerFragment", "sme v onPause" + unitToEnd.value)
+        super.onPause()
     }
 
 
 
+    override fun onDestroy() {
+        Log.i("TimerFragment", "sme v onDestroy")
+        super.onDestroy()
+    }
+
+    override fun onDetach() {
+        Log.i("TimerFragment", "sme v onDetach")
+        super.onDetach()
+    }
 
     fun newInstance(param1: String, param2: String) =
             WelcomeFragment().apply {
@@ -316,3 +343,4 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
     }
 
 }
+

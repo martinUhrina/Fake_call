@@ -1,6 +1,6 @@
 package com.example.fake_call
 
-import android.view.TextureView
+
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
