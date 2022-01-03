@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/biela"
+    tools:context=".PickedUpCall">
+
+
+    <ImageButton
+        android:id="@+id/canceledCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:foregroundGravity="center"
+
+        android:src="@drawable/ic_phone_missed_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pause"></ImageButton>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImage"
+        android:layout_width="186dp"
+        android:layout_height="178dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/defaultpicture"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberAtPicked" />
+
+    <TextView
+        android:id="@+id/numberAtPicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameAtPicked" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/microphonem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colon"
+        app:srcCompat="@drawable/ic_volume_up_black_24dp" />
+
+    <ImageView
+        android:id="@+id/microphonem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/speaker"
+        app:layout_constraintEnd_toEndOf="@+id/colon"
+        app:layout_constraintStart_toStartOf="@+id/colon"
+        app:layout_constraintTop_toTopOf="@+id/speaker"
+        app:srcCompat="@drawable/ic_mic_black_24dp" />
+
+    <ImageView
+        android:id="@+id/video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/speaker"
+        app:layout_constraintStart_toStartOf="@+id/speaker"
+        app:layout_constraintTop_toBottomOf="@+id/speaker"
+        app:srcCompat="@drawable/ic_videocam_black_24dp" />
+
+    <ImageView
+        android:id="@+id/pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/video"
+        app:layout_constraintEnd_toEndOf="@+id/microphonem"
+        app:layout_constraintStart_toStartOf="@+id/microphonem"
+        app:layout_constraintTop_toTopOf="@+id/video"
+        app:srcCompat="@drawable/ic_pause_black_24dp" />
+
+    <ImageView
+        android:id="@+id/hashtag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/pause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pause"
+        app:layout_constraintTop_toTopOf="@+id/pause"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_tag_black_24dp" />
+
+    <ImageView
+        android:id="@+id/plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/microphonem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/microphonem"
+        app:layout_constraintTop_toTopOf="@+id/microphonem"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <TextView
+        android:id="@+id/colon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text=":"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImage" />
+
+    <TextView
+        android:id="@+id/minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:text="00"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/colon"
+        app:layout_constraintEnd_toStartOf="@+id/colon"
+        app:layout_constraintTop_toTopOf="@+id/colon" />
+
+    <TextView
+        android:id="@+id/seconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="00"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/colon"
+        app:layout_constraintStart_toEndOf="@+id/minute"
+        app:layout_constraintTop_toTopOf="@+id/colon" />
+
+    <TextView
+        android:id="@+id/nameAtPicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

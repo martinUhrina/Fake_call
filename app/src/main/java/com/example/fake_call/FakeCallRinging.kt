@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.system.exitProcess
 
 
 class FakeCallRinging : AppCompatActivity() {
@@ -29,15 +30,18 @@ class FakeCallRinging : AppCompatActivity() {
         AssignFakeNumberAndDisplay()
         StartRingTone()
         answerCall!!.setOnClickListener { ringTone!!.stop()
-            val Main = Intent(this, MainActivity::class.java)
+            val Main = Intent(this, PickedUpCall()::class.java).apply { putExtra("number", contactNumber)
+            putExtra("name", contactName)}
             startActivity(Main)
         }
         rejectCall!!.setOnClickListener {
             ringTone!!.stop()
-            val homeIntent = Intent(Intent.ACTION_MAIN)
+           /* val homeIntent = Intent(Intent.ACTION_MAIN)
             homeIntent.addCategory(Intent.CATEGORY_HOME)
             homeIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(homeIntent)
+            startActivity(homeIntent)*/
+            moveTaskToBack(true);
+            exitProcess(-1)
         }
     }
 

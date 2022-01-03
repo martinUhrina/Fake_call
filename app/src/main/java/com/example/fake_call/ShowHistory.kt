@@ -10,8 +10,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AlertDialogLayout
 import androidx.core.view.isEmpty
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.fake_call.database.CallDatabase
 import kotlinx.android.synthetic.main.activity_show_history.*
 import kotlinx.android.synthetic.main.activity_show_history.view.*
@@ -24,12 +27,27 @@ class ShowHistory : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.title = ""
 
+
+        loadRecyclerView()
+        refreshApp()
+
+    }
+
+    private fun loadRecyclerView() {
         val dao = CallDatabase.getDatabase(application).dao()
         CallListActivity.layoutManager = LinearLayoutManager(this)
         GlobalScope.launch {
             CallListActivity.adapter = CallAdapter(dao.selectAllData())
         }
     }
+
+    private fun refreshApp() {
+        SwipeRefreshLayout.setOnRefreshListener(){
+            loadRecyclerView()
+            SwipeRefreshLayout.isRefreshing = false
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -67,7 +85,7 @@ class ShowHistory : AppCompatActivity() {
         val database = CallDatabase.getDatabase(this)
         val dao = database.dao()
         CallListActivity.layoutManager = LinearLayoutManager(this)
-       // CoroutineScope(Dispatchers.IO).launch {
+      //  CoroutineScope(Dispatchers.IO).launch {
          GlobalScope.launch {
              dao.deleteAllCall()
 
@@ -76,14 +94,15 @@ class ShowHistory : AppCompatActivity() {
 
              }
 
-             /*    withContext(Dispatchers.Main)
+                 withContext(Dispatchers.Main)
             {
-                Log.i("FFFFFFFFFFF","SME PRED CLEARITEMS V Dispatcherovi")
+                Log.i("ShowHistory","SME PRED CLEARITEMS V Dispatcherovi")
 
-            }*/
+            }
          }
 
         Toast.makeText(this@ShowHistory, "Call history was successful deleted", Toast.LENGTH_SHORT).show()
         }
     }
+
 
