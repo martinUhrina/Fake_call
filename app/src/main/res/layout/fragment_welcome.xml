@@ -30,6 +30,7 @@
 
         <Button
             android:id="@+id/btnNext"
+            android:layout_gravity="center_horizontal"
             style="@style/btnStyle"
             android:layout_height="70dp"
             android:textSize="36sp"
@@ -37,6 +38,20 @@
             android:inputType="text"
             android:text="Continue"
             android:textColor="@color/biela"
+            app:strokeColor="@color/strokeColor"
+            app:strokeWidth="6dp"></Button>
+
+        <Button
+            android:id="@+id/btnAddVoice"
+            style="@style/btnStyle"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginTop="500dp"
+            android:inputType="text"
+            android:text="Add voice"
+            android:textColor="@color/biela"
+            android:textSize="36sp"
             app:strokeColor="@color/strokeColor"
             app:strokeWidth="6dp"></Button>
 

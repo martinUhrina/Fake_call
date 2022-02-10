@@ -29,7 +29,8 @@ class FakeCallRinging : AppCompatActivity() {
         GetNetworkOperatorName()
         AssignFakeNumberAndDisplay()
         StartRingTone()
-        answerCall!!.setOnClickListener { ringTone!!.stop()
+        answerCall!!.setOnClickListener {
+            ringTone!!.stop()
             val Main = Intent(this, PickedUpCall()::class.java).apply { putExtra("number", contactNumber)
             putExtra("name", contactName)}
             startActivity(Main)

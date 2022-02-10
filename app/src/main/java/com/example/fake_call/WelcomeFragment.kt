@@ -1,6 +1,9 @@
 package com.example.fake_call
 
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -9,10 +12,12 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.fake_call.databinding.FragmentWelcomeBinding
+import kotlinx.coroutines.flow.combine
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,21 +33,35 @@ class WelcomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var record = MutableLiveData<String>()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+       /*     var mParam1 : String = String()
 
-
-        }
+            if (requireArguments() != null)
+            {
+                mParam1 = requireArguments().getString("params").toString()
+            }
+            record.value = mParam1
+      */  }
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        var name = arguments?.getString("paramas")
+
+        var activity : StartRecording = (StartRecording())
+
+
 
         val binding:FragmentWelcomeBinding = DataBindingUtil.inflate(
             inflater,
@@ -51,6 +70,14 @@ class WelcomeFragment : Fragment() {
             false
         )
         setHasOptionsMenu(true)
+
+
+        binding.btnAddVoice.setOnClickListener {
+            val recording = Intent(context, StartRecording::class.java)
+
+            startActivity(recording)
+
+        }
         binding.btnNext.setOnClickListener { view: View ->
             if(binding.EditTextName.text.toString() == "" || binding.editTextNumber.text.toString() == "" ) {
                 Toast.makeText(context, "Please, insert all data", Toast.LENGTH_SHORT).show()
@@ -92,6 +119,7 @@ class WelcomeFragment : Fragment() {
 
     }
 
+    
     companion object {
         /**
          * Use this factory method to create a new instance of

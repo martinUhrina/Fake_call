@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.fake_call">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -24,11 +26,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FAKE_CALL">
-        <activity android:name=".PickedUpCall"></activity>
+        <activity
+            android:name=".StartRecording"
+            android:screenOrientation="locked">
+        </activity>
+        <activity android:name=".PickedUpCall" />
         <activity
             android:name=".ShowHistory"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="locked"></activity>
+            android:screenOrientation="locked" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="locked">
@@ -37,6 +43,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".FakeCallRinging"

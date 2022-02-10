@@ -1,6 +1,5 @@
 package com.example.fake_call
 
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,11 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AlertDialogLayout
-import androidx.core.view.isEmpty
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.fake_call.database.CallDatabase
 import kotlinx.android.synthetic.main.activity_show_history.*
 import kotlinx.android.synthetic.main.activity_show_history.view.*
