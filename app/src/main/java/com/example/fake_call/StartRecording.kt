@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,15 +18,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import kotlinx.android.synthetic.main.activity_show_history.*
 import java.io.File
-import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-//@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class StartRecording : AppCompatActivity() {
     var MICROPHONE_PERMISSION_CODE = 200;
     var nameOfRecord = MutableLiveData<String>()
+    var actualChosse = MutableLiveData<String>()
     var help = MutableLiveData<Boolean>()
     var mediaRecorder : MediaRecorder = MediaRecorder()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,74 +39,28 @@ class StartRecording : AppCompatActivity() {
         var play : Button = findViewById(R.id.play)
 
 
-
-
-        //       var hellpButtona2 : Button = findViewById(R.id.button3)
-
-
-      /*  hellpButtona.setOnClickListener {
-
-
-            val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-            val editor :SharedPreferences.Editor = sharedPreferences.edit()
-            editor.apply(){
-                putString("STRING_KEY","JABLKO")
-            }.apply()
-            Toast.makeText(this, "Data saved",Toast.LENGTH_SHORT).show()
-        }
-        hellpButtona2.setOnClickListener {
-            val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-            val savedString : String = sharedPreferences.getString("STRING_KEY",null).toString()
-            Toast.makeText(this, savedString,Toast.LENGTH_SHORT).show()
-        }
-*/
-
-
-
-
-
-
-
-
-
-
-
-
         val actionbar = supportActionBar
         actionbar!!.title = "Records"
         actionbar.setDisplayHomeAsUpEnabled(true)
 
-
         stop.isEnabled = false
         var path = String()
-
-  //      Toast.makeText(this,path,Toast.LENGTH_SHORT).show()
-
-
-
-
-        val mediaPlayer : MediaPlayer = MediaPlayer()
-
-        var isRecorded : Boolean = false
-        var listView : ListView = findViewById(R.id.ListView)
 
         if (checkMicrophone())
         {
             givePermission()
         }
+        var listView : ListView = findViewById(R.id.ListView)
 
         var mp3file : ArrayList<String> = ArrayList()
 
-        var skuska : File = File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/Tue Jan 18 21:34:07 GMT+01:00 2022.mp3")
-        var skuska2 : File = File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/Tue Jan 18 21:38:42 GMT+01:00 2022.mp3")
+  //      var skuska : File = File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/Tue Jan 18 21:34:07 GMT+01:00 2022.mp3")
+
         var skuska3 : ArrayList<File> = ArrayList()
-        skuska.deleteOnExit()
 
         File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/").walkBottomUp().forEach {
             skuska3.add(it)
         }
-
-
         for (f in skuska3)
         {
             mp3file.add(f.name)
@@ -118,18 +70,37 @@ class StartRecording : AppCompatActivity() {
         listView.adapter = adapter;
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-    //        this.actualRecord.value = adapter.getItem(position).toString()
-              Toast.makeText(this, adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show()
+            this.actualChosse.value = adapter.getItem(position).toString()
+              Toast.makeText(this,"Chosse: " + adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show()
        //     this.actualRecord.value = givePath().toString()
             sendData(adapter.getItem(position).toString())
 
         }
 
+        SwipeRefreshLayout.setOnRefreshListener {
+            var mp3file : ArrayList<String> = ArrayList()
+            var skuska3 : ArrayList<File> = ArrayList()
+            var listView : ListView = findViewById(R.id.ListView)
+
+
+            File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/").walkBottomUp().forEach {
+                skuska3.add(it)
+            }
+
+            for (f in skuska3)
+            {
+                mp3file.add(f.name)
+            }
+            var adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, mp3file)
+            listView.adapter = adapter;
+
+        }
 
         recording.setOnClickListener {
             builder()
+            stop.isEnabled = true
 
-     //      Toast.makeText(this, path, Toast.LENGTH_SHORT).show()
+            //      Toast.makeText(this, path, Toast.LENGTH_SHORT).show()
          /*   mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
             mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
@@ -138,10 +109,7 @@ class StartRecording : AppCompatActivity() {
 
             mediaRecorder.prepare()
             mediaRecorder.start()
-  //          Toast.makeText(this, path,Toast.LENGTH_SHORT).show()
 */
-            //     Toast.makeText(this,"The recording started",Toast.LENGTH_SHORT).show()
-            stop.isEnabled = true
          /*   mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
             mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
@@ -169,13 +137,14 @@ class StartRecording : AppCompatActivity() {
         }
         play.setOnClickListener {
             var mp : MediaPlayer = MediaPlayer()
+            val musicDirectory : File? = applicationContext.getExternalFilesDir(Environment.getExternalStorageDirectory().toString())
        //     mp.setDataSource("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/kokos.mp3")
-       //     Toast.makeText(this, path, Toast.LENGTH_SHORT).show()
-            mp.setDataSource(path)
+   //         Toast.makeText(this, musicDirectory.toString() +"/" + actualChosse.value.toString(), Toast.LENGTH_SHORT).show()
+            var pathToFile : String = musicDirectory.toString() +"/" + actualChosse.value.toString()
+            mp.setDataSource(pathToFile)
             mp.prepare()
             mp.start()
-
-  //          Toast.makeText(this, "The recording playing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "The recording playing", Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -192,7 +161,8 @@ class StartRecording : AppCompatActivity() {
         editor.apply(){
             putString("STRING_KEY", newDirect)
         }.apply()
-        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show()
+ //       Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show()
+        Log.i("StartRecording","DATA SAVED")
     }
 
 
@@ -219,11 +189,9 @@ class StartRecording : AppCompatActivity() {
         } else {
             "1.1.2001"
         }
-        val cas = LocalDateTime.now()
         help.value = true
         val contextWrapper : ContextWrapper = ContextWrapper(applicationContext)
         val musicDirectory : File? = contextWrapper.getExternalFilesDir(Environment.getExternalStorageDirectory().toString())
-       // val file : File? = File(musicDirectory, "/" + currentDateLocal + ".mp3")
         val file : File? = File(musicDirectory, "/" + nameOfRecord.value.toString() + ".mp3")
         if (file != null) {
             return file.path
@@ -242,7 +210,7 @@ class StartRecording : AppCompatActivity() {
             setPositiveButton("OK"){ dialog, which ->
                 nameOfRecord.value = editText.text.toString()
                 var path  = givePath()
-                Toast.makeText(context,path,Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"Recording started",Toast.LENGTH_SHORT).show()
                 startRecording(path)
                 return@setPositiveButton
             }
@@ -278,12 +246,40 @@ class StartRecording : AppCompatActivity() {
         if(item.itemId == R.id.deleteAll)
         {
             Toast.makeText(applicationContext,"DELETE",Toast.LENGTH_SHORT).show()
+            deleteThis()
         }
         else {
             goBack()
         }
         return true
     }
+
+    private fun deleteThis() {
+        var deletedFile : String = String()
+        val builder = AlertDialog.Builder(this)
+        val inflater : LayoutInflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
+        val editText = dialogLayout.findViewById<EditText>(R.id.et_editText)
+        with(builder)
+        {
+            setTitle("Insert deleted file")
+            setPositiveButton("DELETE") { dialog, which ->
+                deletedFile = editText.text.toString()
+                var file = File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/"+ deletedFile + ".mp3")
+                if(file.exists())
+                {
+                    Toast.makeText(context,"This file not exist", Toast.LENGTH_SHORT).show()
+                }
+                file.delete()
+            }
+            setNegativeButton("Cancel"){ dialog, which ->
+                Log.d("Main", "Negative")
+            }
+            setView(dialogLayout)
+            show()
+        }
+    }
+
     private fun goBack() {
         val mainActivityLaunch = Intent(this, MainActivity::class.java)
         startActivity(mainActivityLaunch)
@@ -291,6 +287,21 @@ class StartRecording : AppCompatActivity() {
     private fun refreshListView()
     {
         SwipeRefreshLayout.setOnRefreshListener {
+            var mp3file : ArrayList<String> = ArrayList()
+            var skuska3 : ArrayList<File> = ArrayList()
+            var listView : ListView = findViewById(R.id.ListView)
+
+
+            File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/").walkBottomUp().forEach {
+                skuska3.add(it)
+            }
+
+            for (f in skuska3)
+            {
+                mp3file.add(f.name)
+            }
+            var adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, mp3file)
+            listView.adapter = adapter;
 
         }
     }

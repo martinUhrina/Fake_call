@@ -29,16 +29,16 @@ class PickedUpCall : AppCompatActivity() {
 
         val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val savedString : String = sharedPreferences.getString("STRING_KEY", null).toString()
-        Toast.makeText(this, savedString, Toast.LENGTH_SHORT).show()
+ //       Toast.makeText(this, savedString, Toast.LENGTH_SHORT).show()
 
         val contextWrapper : ContextWrapper = ContextWrapper(applicationContext)
         val musicDirectory : File? = contextWrapper.getExternalFilesDir(Environment.getExternalStorageDirectory().toString())
         // val file : File? = File(musicDirectory, "/" + currentDateLocal + ".mp3")
         val file : File? = File(musicDirectory, "/" + savedString)
-        if (file != null) {
+    /*    if (file != null) {
             Toast.makeText(this, file.path, Toast.LENGTH_SHORT).show()
         }
-
+*/
         var mediaPlayer : MediaPlayer = MediaPlayer()
         if (file != null) {
             mediaPlayer.setDataSource(file.path)
