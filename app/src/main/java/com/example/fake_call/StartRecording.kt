@@ -17,6 +17,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import kotlinx.android.synthetic.main.activity_show_history.*
+import kotlinx.android.synthetic.main.activity_show_history.SwipeRefreshLayout
+import kotlinx.android.synthetic.main.activity_start_recording.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,7 +46,7 @@ class StartRecording : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
 
         stop.isEnabled = false
-        var path = String()
+        play.isEnabled = false
 
         if (checkMicrophone())
         {
@@ -54,7 +56,8 @@ class StartRecording : AppCompatActivity() {
 
         var mp3file : ArrayList<String> = ArrayList()
 
-  //      var skuska : File = File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/Tue Jan 18 21:34:07 GMT+01:00 2022.mp3")
+        var skuska : File = File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/0")
+        skuska.delete()
 
         var skuska3 : ArrayList<File> = ArrayList()
 
@@ -71,6 +74,7 @@ class StartRecording : AppCompatActivity() {
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             this.actualChosse.value = adapter.getItem(position).toString()
+            play.isEnabled = true
               Toast.makeText(this,"Chosse: " + adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show()
        //     this.actualRecord.value = givePath().toString()
             sendData(adapter.getItem(position).toString())
@@ -98,7 +102,7 @@ class StartRecording : AppCompatActivity() {
 
         recording.setOnClickListener {
             builder()
-            stop.isEnabled = true
+
 
             //      Toast.makeText(this, path, Toast.LENGTH_SHORT).show()
          /*   mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -124,7 +128,7 @@ class StartRecording : AppCompatActivity() {
             mediaRecorder.stop()
             stop.isEnabled = false
             Toast.makeText(this, "The recording stopped", Toast.LENGTH_SHORT).show()
-
+            refreshListView()
             /*stop.isEnabled = false
             if (isRecorded)
             {
@@ -210,6 +214,7 @@ class StartRecording : AppCompatActivity() {
             setPositiveButton("OK"){ dialog, which ->
                 nameOfRecord.value = editText.text.toString()
                 var path  = givePath()
+                stop.isEnabled = true
                 Toast.makeText(context,"Recording started",Toast.LENGTH_SHORT).show()
                 startRecording(path)
                 return@setPositiveButton
@@ -245,7 +250,6 @@ class StartRecording : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.deleteAll)
         {
-            Toast.makeText(applicationContext,"DELETE",Toast.LENGTH_SHORT).show()
             deleteThis()
         }
         else {
@@ -266,11 +270,17 @@ class StartRecording : AppCompatActivity() {
             setPositiveButton("DELETE") { dialog, which ->
                 deletedFile = editText.text.toString()
                 var file = File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/"+ deletedFile + ".mp3")
-                if(file.exists())
+                if(!file.exists())
                 {
                     Toast.makeText(context,"This file not exist", Toast.LENGTH_SHORT).show()
                 }
-                file.delete()
+                else
+                {
+                    Toast.makeText(applicationContext,"file was deleted",Toast.LENGTH_SHORT).show()
+                    file.delete()
+                    refreshListView()
+                }
+
             }
             setNegativeButton("Cancel"){ dialog, which ->
                 Log.d("Main", "Negative")
@@ -286,7 +296,7 @@ class StartRecording : AppCompatActivity() {
     }
     private fun refreshListView()
     {
-        SwipeRefreshLayout.setOnRefreshListener {
+
             var mp3file : ArrayList<String> = ArrayList()
             var skuska3 : ArrayList<File> = ArrayList()
             var listView : ListView = findViewById(R.id.ListView)
@@ -303,8 +313,8 @@ class StartRecording : AppCompatActivity() {
             var adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, mp3file)
             listView.adapter = adapter;
 
-        }
     }
+
 
 
 }

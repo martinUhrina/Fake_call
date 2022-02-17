@@ -31,9 +31,10 @@ class FakeCallRinging : AppCompatActivity() {
         StartRingTone()
         answerCall!!.setOnClickListener {
             ringTone!!.stop()
-            val Main = Intent(this, PickedUpCall()::class.java).apply { putExtra("number", contactNumber)
-            putExtra("name", contactName)}
-            startActivity(Main)
+            val main = Intent(this, PickedUpCall()::class.java)
+            main.putExtra("number", contactNumber)
+            main.putExtra("name", contactName)
+            startActivity(main)
         }
         rejectCall!!.setOnClickListener {
             ringTone!!.stop()
