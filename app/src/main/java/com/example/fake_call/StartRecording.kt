@@ -30,6 +30,8 @@ class StartRecording : AppCompatActivity() {
     var actualChosse = MutableLiveData<String>()
     var help = MutableLiveData<Boolean>()
     var mediaRecorder : MediaRecorder = MediaRecorder()
+    lateinit var listView : ListView
+    lateinit var adapter : ArrayAdapter<String>
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -52,7 +54,8 @@ class StartRecording : AppCompatActivity() {
         {
             givePermission()
         }
-        var listView : ListView = findViewById(R.id.ListView)
+    //    var listView : ListView = findViewById(R.id.ListView)
+        listView = findViewById(R.id.ListView)
 
         var mp3file : ArrayList<String> = ArrayList()
 
@@ -69,9 +72,10 @@ class StartRecording : AppCompatActivity() {
             mp3file.add(f.name)
         }
 
-        var adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, mp3file)
+        adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, mp3file)
         listView.adapter = adapter;
 
+        refreshListView()
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             this.actualChosse.value = adapter.getItem(position).toString()
             play.isEnabled = true
@@ -299,9 +303,7 @@ class StartRecording : AppCompatActivity() {
 
             var mp3file : ArrayList<String> = ArrayList()
             var skuska3 : ArrayList<File> = ArrayList()
-            var listView : ListView = findViewById(R.id.ListView)
-
-
+       //     var listView : ListView = findViewById(R.id.ListView)
             File("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/").walkBottomUp().forEach {
                 skuska3.add(it)
             }
@@ -310,7 +312,7 @@ class StartRecording : AppCompatActivity() {
             {
                 mp3file.add(f.name)
             }
-            var adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, mp3file)
+            adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, mp3file)
             listView.adapter = adapter;
 
     }

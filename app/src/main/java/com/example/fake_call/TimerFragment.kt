@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -70,6 +71,13 @@ class TimerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
+        ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CALL_PHONE),
+                REQUEST_PHONE_CALL
+        )
+
         Log.i("TimerFragment","sme v onCreteView")
         val binding: FragmentTimerBinding = DataBindingUtil.inflate(
                 inflater,R.layout.fragment_timer,container,false
@@ -117,7 +125,7 @@ class TimerFragment : Fragment() {
                 arrayOf(Manifest.permission.MANAGE_OWN_CALLS),
                 REQUEST_PHONE_CALL
             )
-            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+         /*   if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
                 {
                     ActivityCompat.requestPermissions(
                         requireActivity(),
@@ -134,7 +142,7 @@ class TimerFragment : Fragment() {
                         startIncomingCall()
                     }
                     goBack()
-              */}
+              */}*/
 
         }
         return binding.root
@@ -183,14 +191,30 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
                 if (isOnStop.value == true && countQuantity.value == 0) {
 
                     if (function == binding.idCalling.id) {
-                        ActivityCompat.requestPermissions(
+                        addToDatabase(name, number)
+                        startCall(number)
+                        goBack()
+                        //      val permissions : String = android.Manifest.permission.CALL_PHONE
+                     /*   if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) ==
+                                PackageManager.PERMISSION_GRANTED)
+                        {
+                            ActivityCompat.requestPermissions(requireActivity(), arrayOf(permissions), 1)
+                        }*/
+                      /*  if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                        {
+                            ActivityCompat.requestPermissions(
+                                    requireActivity(),
+                                    arrayOf(Manifest.permission.CALL_PHONE),
+                                    REQUEST_PHONE_CALL
+                            )
+                        }
+*/
+                     /*   ActivityCompat.requestPermissions(
                                 requireActivity(),
                                 arrayOf(Manifest.permission.CALL_PHONE),
                                 REQUEST_PHONE_CALL
                         )
-                        addToDatabase(name, number)
-                        startCall(number)
-                        goBack()
+                       */
                     } else {
                         Log.i("TimerFragment", "pustam hovor cez Klasiku " + isOnStop.value)
                         countQuantity.value = 1
