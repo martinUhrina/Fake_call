@@ -4,6 +4,7 @@ package com.example.fake_call
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
@@ -71,7 +72,7 @@ class TimerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(Manifest.permission.CALL_PHONE),
@@ -114,7 +115,6 @@ class TimerFragment : Fragment() {
                 }
 
                 POMOC = true
-            //    startTimer(longTimer = timer, binding, telNumber, name)
                 startTimer(longTimer = counterRemainingTime.value!!, binding, telNumber, name)
             }
 
@@ -125,24 +125,6 @@ class TimerFragment : Fragment() {
                 arrayOf(Manifest.permission.MANAGE_OWN_CALLS),
                 REQUEST_PHONE_CALL
             )
-         /*   if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-                {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(Manifest.permission.CALL_PHONE),
-                        REQUEST_PHONE_CALL
-                    )
-                }
-                else {
-             /*       if(function == binding.idCalling.id) {
-
-                    startCall(telNumber)
-                    }
-                    else{
-                        startIncomingCall()
-                    }
-                    goBack()
-              */}*/
 
         }
         return binding.root
@@ -194,27 +176,6 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
                         addToDatabase(name, number)
                         startCall(number)
                         goBack()
-                        //      val permissions : String = android.Manifest.permission.CALL_PHONE
-                     /*   if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) ==
-                                PackageManager.PERMISSION_GRANTED)
-                        {
-                            ActivityCompat.requestPermissions(requireActivity(), arrayOf(permissions), 1)
-                        }*/
-                      /*  if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-                        {
-                            ActivityCompat.requestPermissions(
-                                    requireActivity(),
-                                    arrayOf(Manifest.permission.CALL_PHONE),
-                                    REQUEST_PHONE_CALL
-                            )
-                        }
-*/
-                     /*   ActivityCompat.requestPermissions(
-                                requireActivity(),
-                                arrayOf(Manifest.permission.CALL_PHONE),
-                                REQUEST_PHONE_CALL
-                        )
-                       */
                     } else {
                         Log.i("TimerFragment", "pustam hovor cez Klasiku " + isOnStop.value)
                         countQuantity.value = 1

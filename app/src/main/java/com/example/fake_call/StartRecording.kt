@@ -25,7 +25,9 @@ import kotlin.collections.ArrayList
 
 
 class StartRecording : AppCompatActivity() {
+
     var MICROPHONE_PERMISSION_CODE = 200;
+
     var nameOfRecord = MutableLiveData<String>()
     var actualChosse = MutableLiveData<String>()
     var help = MutableLiveData<Boolean>()
@@ -106,28 +108,7 @@ class StartRecording : AppCompatActivity() {
 
         recording.setOnClickListener {
             builder()
-
-
-            //      Toast.makeText(this, path, Toast.LENGTH_SHORT).show()
-         /*   mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
-       //     mediaRecorder.setOutputFile("/storage/emulated/0/Android/data/com.example.fake_call/files/storage/emulated/0/kokos.mp3")
-            mediaRecorder.setOutputFile(path)
-
-            mediaRecorder.prepare()
-            mediaRecorder.start()
-*/
-         /*   mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
-            mediaRecorder.setOutputFile(path)
-            mediaRecorder.prepare()
-            mediaRecorder.start()
-            stop.isEnabled = true
-            isRecorded = true
-            Toast.makeText(this,"The recording started",Toast.LENGTH_SHORT).show()
-       */ }
+        }
         stop.setOnClickListener {
             mediaRecorder.stop()
             stop.isEnabled = false
@@ -314,9 +295,5 @@ class StartRecording : AppCompatActivity() {
             }
             adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, mp3file)
             listView.adapter = adapter;
-
     }
-
-
-
 }

@@ -30,14 +30,15 @@
             android:name=".StartRecording"
             android:screenOrientation="locked">
         </activity>
-        <activity android:name=".PickedUpCall" />
+        <activity android:name=".PickedUpCall"
+            android:screenOrientation="locked"/>
         <activity
             android:name=".ShowHistory"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="locked" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="locked">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

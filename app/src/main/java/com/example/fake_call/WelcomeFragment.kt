@@ -17,6 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.fake_call.databinding.FragmentWelcomeBinding
+import kotlinx.android.synthetic.*
 import kotlinx.coroutines.flow.combine
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,25 +43,13 @@ class WelcomeFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-       /*     var mParam1 : String = String()
-
-            if (requireArguments() != null)
-            {
-                mParam1 = requireArguments().getString("params").toString()
-            }
-            record.value = mParam1
-      */  }
+        }
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        var name = arguments?.getString("paramas")
-
-        var activity : StartRecording = (StartRecording())
-
 
 
         val binding:FragmentWelcomeBinding = DataBindingUtil.inflate(

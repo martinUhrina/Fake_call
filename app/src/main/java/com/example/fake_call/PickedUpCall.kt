@@ -61,39 +61,7 @@ class PickedUpCall : AppCompatActivity() {
         }
         else soundPool = SoundPool(2,AudioManager.STREAM_MUSIC,0)
 
-  //      var sound : Int = soundPool.load(this,savedString,1)
-   //     soundPool.play(sound, 1F, 1F,1,1, 1F)
 
-
-
-
-
-
-      //  val filePath = Environment.getExternalStorageDirectory().toString() + savedString
-
-
-
-
-    /*    val file = File(
-                this.getDir("Music", MODE_PRIVATE),
-                savedString
-        )
-        var mediaPlayer1 = MediaPlayer.create(this, Uri.fromFile(file ))
-        mediaPlayer1.start()
-*/
-//        var path  : String = Environment.getExternalStorageDirectory().toString()+"/Tue Feb 03 20:48:20 GMT+01:00 2022.mp3"
-     //   var cdjuaios = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
-
-
-        /*
-             if (savedString != null){
-                 var mediaPLayer = MediaPlayer()
-                 mediaPLayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                 mediaPLayer.setDataSource(savedString)
-                 mediaPLayer.prepare()
-                 mediaPLayer.start()
-             }
-*/
         val newNumber = intent.getStringExtra("number")
         findViewById<TextView>(R.id.numberAtPicked).apply { text = newNumber.toString() }
         val newName = intent.getStringExtra("name")

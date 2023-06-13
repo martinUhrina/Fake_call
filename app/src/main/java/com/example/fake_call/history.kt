@@ -33,20 +33,13 @@ class history : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-
-
        // val StartHistory = Intent(context, ShowHistory::class.java)
-
         //startActivity(StartHistory)
-
-
     }
-
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
 
         return inflater.inflate(R.layout.fragment_history, container, false)
     }
