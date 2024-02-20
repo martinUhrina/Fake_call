@@ -248,7 +248,6 @@ fun FakeRing(fakeNumber: String, context: Context, name: String) {
 
 
     override fun onStop() {
-   //     Log.i("TimerFragment", "sme v onStop" + unitToEnd.value)
         isOnStop.value = false
  //       startTimerOnStop()
         super.onStop()

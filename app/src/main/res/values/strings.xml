@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="thanks_abobut_fragment">Thank for download FAKE_CALL application.</string>
+    <string name="colon">:</string>
+    <string name="minute">00</string>
+    <string name="seconds">00</string>
 </resources>

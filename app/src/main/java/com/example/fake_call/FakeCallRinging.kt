@@ -38,10 +38,6 @@ class FakeCallRinging : AppCompatActivity() {
         }
         rejectCall!!.setOnClickListener {
             ringTone!!.stop()
-           /* val homeIntent = Intent(Intent.ACTION_MAIN)
-            homeIntent.addCategory(Intent.CATEGORY_HOME)
-            homeIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(homeIntent)*/
             moveTaskToBack(true);
             exitProcess(-1)
         }

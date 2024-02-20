@@ -83,16 +83,13 @@ class ShowHistory : AppCompatActivity() {
       //  CoroutineScope(Dispatchers.IO).launch {
          GlobalScope.launch {
              dao.deleteAllCall()
-
              CoroutineScope(Dispatchers.IO).launch {
                  CallAdapter(dao.selectAllData()).clearItems()
-
              }
 
-                 withContext(Dispatchers.Main)
+             withContext(Dispatchers.Main)
             {
                 Log.i("ShowHistory","SME PRED CLEARITEMS V Dispatcherovi")
-
             }
          }
 

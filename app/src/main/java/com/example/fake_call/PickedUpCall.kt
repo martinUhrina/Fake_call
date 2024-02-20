@@ -16,11 +16,19 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import kotlinx.android.synthetic.main.activity_picked_up_call.*
 import java.io.File
+import kotlin.math.min
 import kotlin.system.exitProcess
 
 class PickedUpCall : AppCompatActivity() {
     var data : String = ""
+
+    val secondLive = MutableLiveData<Int>()
+    val minuteLive = MutableLiveData<Int>()
+
+
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +53,6 @@ class PickedUpCall : AppCompatActivity() {
             mediaPlayer.prepare()
             mediaPlayer.start()
         }
-
-
 
 
         var soundPool : SoundPool
@@ -75,17 +81,21 @@ class PickedUpCall : AppCompatActivity() {
         startTimer()
     }
 
-
-
     private fun startTimer()
     {
         var seconds : TextView = findViewById(R.id.seconds)
         var minutes : TextView = findViewById(R.id.minute)
         var countSec: Int = 0
         var countMin: Int = 0
+        secondLive.value = 0
+        minuteLive.value = 0
 
         val cTimer = object : CountDownTimer(2000000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                if (secondLive.value!! > 0){
+                    countSec = secondLive.value!!
+                    countMin = minuteLive.value!!
+                }
                 countSec++
                 if (countSec == 60)
                 {
@@ -96,15 +106,25 @@ class PickedUpCall : AppCompatActivity() {
                 }
                 if (countSec<10)seconds.text = "0" + countSec.toString()
                 else seconds.text = countSec.toString()
-
-
             }
 
-            override fun onFinish() {
-
-            }
-
+            override fun onFinish() {}
         }
        cTimer.start()
     }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt("key", secondLive.value!!)
+        outState.putInt("key1", minuteLive.value!!)
+    }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        secondLive.value = savedInstanceState.getInt("key")
+
+        minuteLive.value = savedInstanceState.getInt("key1")
+    }
+
+
 }

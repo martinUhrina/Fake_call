@@ -36,14 +36,12 @@ class StartRecording : AppCompatActivity() {
     lateinit var adapter : ArrayAdapter<String>
     override fun onCreate(savedInstanceState: Bundle?) {
 
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_recording)
 
         var recording : Button = findViewById(R.id.recoding)
         var stop : Button = findViewById(R.id.stop)
         var play : Button = findViewById(R.id.play)
-
 
         val actionbar = supportActionBar
         actionbar!!.title = "Records"
@@ -81,8 +79,7 @@ class StartRecording : AppCompatActivity() {
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             this.actualChosse.value = adapter.getItem(position).toString()
             play.isEnabled = true
-              Toast.makeText(this,"Chosse: " + adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show()
-       //     this.actualRecord.value = givePath().toString()
+            Toast.makeText(this,"Chosse: " + adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show()
             sendData(adapter.getItem(position).toString())
 
         }
